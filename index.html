@@ -37,15 +37,82 @@
   controlText.style.fontSize = '12px';
   controlText.style.paddingLeft = '4px';
   controlText.style.paddingRight = '4px';
-  controlText.innerHTML = '<b>Home</b>';
+  controlText.innerHTML = '<b>HEMMA</b>';
   controlUI.appendChild(controlText);
 
   // Setup the click event listeners: simply set the map to
   // Chicago
   google.maps.event.addDomListener(controlUI, 'click', function() {
-    map.setCenter(stockholm)
+    map.setCenter(new google.maps.LatLng(59.3474224, 18.072787500000004));
+    map.setZoom(16);
   });
+}
 
+  function ZoomInControl(controlDiv, map) {
+
+  // Set CSS styles for the DIV containing the control
+  // Setting padding to 5 px will offset the control
+  // from the edge of the map
+  controlDiv.style.padding = '5px';
+
+  // Set CSS for the control border
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = 'white';
+  controlUI.style.borderStyle = 'solid';
+  controlUI.style.borderWidth = '2px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to set the map to Home';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior
+  var controlText = document.createElement('div');
+  controlText.style.fontFamily = 'Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.paddingLeft = '4px';
+  controlText.style.paddingRight = '4px';
+  controlText.innerHTML = '<b>++++</b>';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to
+  // Chicago
+  google.maps.event.addDomListener(controlUI, 'click', function() {
+   
+    map.setZoom(map.zoom+1);
+  });
+}
+  function ZoomOutControl(controlDiv, map) {
+
+  // Set CSS styles for the DIV containing the control
+  // Setting padding to 5 px will offset the control
+  // from the edge of the map
+  controlDiv.style.padding = '5px';
+
+  // Set CSS for the control border
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = 'white';
+  controlUI.style.borderStyle = 'solid';
+  controlUI.style.borderWidth = '2px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to set the map to Home';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior
+  var controlText = document.createElement('div');
+  controlText.style.fontFamily = 'Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.paddingLeft = '4px';
+  controlText.style.paddingRight = '4px';
+  controlText.innerHTML = '<b>-----</b>';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to
+  // Chicago
+  google.maps.event.addDomListener(controlUI, 'click', function() {
+   
+    map.setZoom(map.zoom-1);
+  });
 }
 
       function initialize() {
@@ -54,17 +121,26 @@
         var mapOptions = {
           center: new google.maps.LatLng(59.3474224, 18.072787500000004),
           zoom: 16,
-          mapTypeId: google.maps.MapTypeId.SATELLITE
+          mapTypeId: google.maps.MapTypeId.SATELLITE,
+          disableDefaultUI: true
+
         };
        
         var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
         map.setTilt(45);
         var homeControlDiv = document.createElement('div');
+        var zoomInControlDiv = document.createElement('div');
+        var zoomOutControlDiv = document.createElement('div');
+
         var homeControl = new HomeControl(homeControlDiv, map);
-
-        //homeControlDiv.index = 1;
+        var zoomInControl = new ZoomInControl(zoomInControlDiv, map);
+        var zoomOutControl = new ZoomOutControl(zoomOutControlDiv, map);
+        homeControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
-
+        zoomInControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomInControlDiv);
+        zoomOutControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomOutControlDiv);
 
 
       }
