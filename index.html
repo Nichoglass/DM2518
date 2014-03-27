@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <link rel="stylesheet" type="text/css" href="albStek.css">
   <title>AlbStek</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
@@ -14,16 +15,29 @@
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 8
+          center: new google.maps.LatLng(59.3474224, 18.072787500000004),
+          zoom: 16,
+          disableDefaultUI: true,
+          mapTypeId: google.maps.MapTypeId.SATELLITE
         };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
+       
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        map.setTilt(45);
+
+
       }
+
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+
   </head>
   <body>
-    <div id="map-canvas"/>
+    <div id="map">
+        <div id="map-canvas"/>
+    </div>
+  <div id="controller">
+<p>hej</p>
+
+  </div>
   </body>
 </html>

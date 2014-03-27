@@ -1,0 +1,10 @@
+#map
+{
+height: 80%;
+width: 100%;
+}
+#controller
+{
+	height: 20%;
+	background-color: grey;
+}
