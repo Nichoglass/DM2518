@@ -17,7 +17,6 @@
         var mapOptions = {
           center: new google.maps.LatLng(59.3474224, 18.072787500000004),
           zoom: 16,
-          disableDefaultUI: true,
           mapTypeId: google.maps.MapTypeId.SATELLITE
         };
        
@@ -26,8 +25,9 @@
         var homeControlDiv = document.createElement('div');
         var homeControl = new HomeControl(homeControlDiv, map);
 
-        homeControlDiv.index = 1;
+        //homeControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+
 
 
       }

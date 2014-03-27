@@ -8,3 +8,8 @@ width: 100%;
 	height: 20%;
 	background-color: grey;
 }
+#homeControlDiv{
+	height: 50px;
+	width: 50px;
+	background-color: pink;
+}
