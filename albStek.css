@@ -1,1 +1,49 @@
+.button{
+	background-color: white;
+	min-height: 20px;
+	min-width: 60px;
+	text-align: center;
+	font-size: 17px;
+	margin: 17px;
+	padding: 10px;
+	border-style: solid;
+	border-width: 5px;
+	border-color: black;
+	cursor: pointer;
+}
+#PositionBox{
+	margin-top: 17px;
+	clear: both;
+	min-height: 50px;
+	min-width: 100px;
 
+}
+.position{
+	height: 17px;
+	width:40px;
+	background-color: gray;
+	cursor: pointer;
+}
+#Up{
+	background-image:url('up.png');
+	margin-left: auto;
+	margin-right: auto;
+
+}
+#Left{
+	background-image:url('left.png');
+	float: left;
+
+}
+#Right{
+	background-image:url('right.png');
+	float: right;
+
+}
+#Down{
+	background-image:url('down.png');
+	clear: both;
+	margin-left: auto;
+	margin-right: auto;
+
+}

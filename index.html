@@ -14,34 +14,97 @@
     </script>
     <script type="text/javascript">
     
+
+
+  function PositionBox(controlDiv, map){
+
+    var positionUp = document.createElement('div');
+    positionUp.id='Up';
+    positionUp.className='position';
+    controlDiv.id='PositionBox'
+    controlDiv.appendChild(positionUp);
+
+    var controlText = document.createElement('div');
+    controlText.innerHTML = '<b> </b>';
+    positionUp.appendChild(controlText);
+
+    google.maps.event.addDomListener(positionUp, 'click', function() {
+    var center = map.getCenter();
+    var New_center = { lat: center.lat() + 0.005,
+        lng: center.lng()
+    };
+    map.panTo(New_center);
+    });
+    // For the left 
+        var positionLeft = document.createElement('div');
+    positionLeft.id='Left';
+
+    positionLeft.className='position';
+    controlDiv.appendChild(positionLeft);
+
+    var controlText = document.createElement('div');
+    controlText.innerHTML = '<b> </b>';
+    positionLeft.appendChild(controlText);
+
+    google.maps.event.addDomListener(positionLeft, 'click', function() {
+      var center = map.getCenter();
+      var New_center = { lat: center.lat(),
+        lng: center.lng() -0.01
+    };
+    map.panTo(New_center);
+    });    
+    //For the right
+    var positionRight = document.createElement('div');
+    positionRight.id='Right';
+
+    positionRight.className='position';
+    controlDiv.appendChild(positionRight);
+
+    var controlText = document.createElement('div');
+    controlText.innerHTML = '<b> </b>';
+    positionRight.appendChild(controlText);
+
+    google.maps.event.addDomListener(positionRight, 'click', function() {
+      var center = map.getCenter();
+      var New_center = { lat: center.lat(),
+        lng: center.lng() +0.01
+           };
+    map.panTo(New_center);
+    });    
+
+    //For the downie
+    var positionDown = document.createElement('div');
+    positionDown.id='Down';
+    positionDown.className='position';
+
+    controlDiv.appendChild(positionDown);
+
+    var controlText = document.createElement('div');
+    controlText.innerHTML = '<b> </b>';
+    positionDown.appendChild(controlText);
+
+    google.maps.event.addDomListener(positionDown, 'click', function() {
+          var center = map.getCenter();
+          var center = map.getCenter();
+      var New_center = { lat: center.lat()-0.005,
+
+        lng: center.lng()
+           };
+
+    map.panTo(New_center);
+    });
+  }
+
     function HomeControl(controlDiv, map) {
-
-  // Set CSS styles for the DIV containing the control
-  // Setting padding to 5 px will offset the control
-  // from the edge of the map
-  controlDiv.style.padding = '5px';
-
-  // Set CSS for the control border
   var controlUI = document.createElement('div');
-  controlUI.style.backgroundColor = 'white';
-  controlUI.style.borderStyle = 'solid';
-  controlUI.style.borderWidth = '2px';
-  controlUI.style.cursor = 'pointer';
-  controlUI.style.textAlign = 'center';
+  controlUI.className = 'button';
   controlUI.title = 'Click to set the map to Home';
   controlDiv.appendChild(controlUI);
 
-  // Set CSS for the control interior
   var controlText = document.createElement('div');
-  controlText.style.fontFamily = 'Arial,sans-serif';
-  controlText.style.fontSize = '12px';
-  controlText.style.paddingLeft = '4px';
-  controlText.style.paddingRight = '4px';
   controlText.innerHTML = '<b>HEMMA</b>';
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply set the map to
-  // Chicago
   google.maps.event.addDomListener(controlUI, 'click', function() {
     map.setCenter(new google.maps.LatLng(59.3474224, 18.072787500000004));
     map.setZoom(16);
@@ -50,61 +113,31 @@
 
   function ZoomInControl(controlDiv, map) {
 
-  // Set CSS styles for the DIV containing the control
-  // Setting padding to 5 px will offset the control
-  // from the edge of the map
-  controlDiv.style.padding = '5px';
-
-  // Set CSS for the control border
   var controlUI = document.createElement('div');
-  controlUI.style.backgroundColor = 'white';
-  controlUI.style.borderStyle = 'solid';
-  controlUI.style.borderWidth = '2px';
-  controlUI.style.cursor = 'pointer';
-  controlUI.style.textAlign = 'center';
-  controlUI.title = 'Click to set the map to Home';
-  controlDiv.appendChild(controlUI);
 
-  // Set CSS for the control interior
+  controlUI.className = 'button';
+  controlUI.title = 'Click to zoom in';
+  controlDiv.appendChild(controlUI);
   var controlText = document.createElement('div');
-  controlText.style.fontFamily = 'Arial,sans-serif';
-  controlText.style.fontSize = '12px';
-  controlText.style.paddingLeft = '4px';
-  controlText.style.paddingRight = '4px';
-  controlText.innerHTML = '<b>++++</b>';
+  controlText.innerHTML = '<b>Zoom in</b>';
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply set the map to
-  // Chicago
-  google.maps.event.addDomListener(controlUI, 'click', function() {
-   
-    map.setZoom(map.zoom+1);
+  google.maps.event.addDomListener(controlUI, 'click', function() { 
+  map.setZoom(map.zoom+1);
+  console.log(map.zoom);
   });
 }
+
   function ZoomOutControl(controlDiv, map) {
 
-  // Set CSS styles for the DIV containing the control
-  // Setting padding to 5 px will offset the control
-  // from the edge of the map
-  controlDiv.style.padding = '5px';
-
-  // Set CSS for the control border
   var controlUI = document.createElement('div');
-  controlUI.style.backgroundColor = 'white';
-  controlUI.style.borderStyle = 'solid';
-  controlUI.style.borderWidth = '2px';
-  controlUI.style.cursor = 'pointer';
-  controlUI.style.textAlign = 'center';
-  controlUI.title = 'Click to set the map to Home';
+
+  controlUI.className = 'button';
+  controlUI.title = 'Click to zoom out';
   controlDiv.appendChild(controlUI);
 
-  // Set CSS for the control interior
   var controlText = document.createElement('div');
-  controlText.style.fontFamily = 'Arial,sans-serif';
-  controlText.style.fontSize = '12px';
-  controlText.style.paddingLeft = '4px';
-  controlText.style.paddingRight = '4px';
-  controlText.innerHTML = '<b>-----</b>';
+  controlText.innerHTML = '<b>Zoom out</b>';
   controlUI.appendChild(controlText);
 
   // Setup the click event listeners: simply set the map to
@@ -112,6 +145,7 @@
   google.maps.event.addDomListener(controlUI, 'click', function() {
    
     map.setZoom(map.zoom-1);
+    console.log(map.zoom);
   });
 }
 
@@ -131,16 +165,21 @@
         var homeControlDiv = document.createElement('div');
         var zoomInControlDiv = document.createElement('div');
         var zoomOutControlDiv = document.createElement('div');
+        var positionBoxDiv= document.createElement('div');
+
 
         var homeControl = new HomeControl(homeControlDiv, map);
         var zoomInControl = new ZoomInControl(zoomInControlDiv, map);
         var zoomOutControl = new ZoomOutControl(zoomOutControlDiv, map);
+        var positionBox = new PositionBox(positionBoxDiv, map);
         homeControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
         zoomInControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomInControlDiv);
         zoomOutControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomOutControlDiv);
+        positionBoxDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(positionBoxDiv);
 
 
       }
