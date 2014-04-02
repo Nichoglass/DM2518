@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<!-- make the app display a site-specified icon on the desktop -->
+	
+	<link rel="shortcut icon" href="logo.ico"> 
   <link rel="stylesheet" type="text/css" href="albStek.css">
   <title>AlbStek</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -13,11 +16,24 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL002f7uxl0bXUaXm2peWVOpzYIQIH8Js&sensor=false">
     </script>
     <script type="text/javascript">
-    
 
+	//Hiding adressbar
+	
+		//Not possible due to seurity reasons
+	
+	//periphery elements
+	 
+		//what?
+		
+	
+	
+		
+		
     //Creating and filling the pan controls
   function PositionBox(controlDiv, map){
 
+
+	// For the up
     var positionUp = document.createElement('div');
     positionUp.id='Up';
     positionUp.className='position';
@@ -35,8 +51,9 @@
     };
     map.panTo(New_center);
     });
-    // For the left 
-        var positionLeft = document.createElement('div');
+    // For the left
+    
+	var positionLeft = document.createElement('div');
     positionLeft.id='Left';
 
     positionLeft.className='position';
@@ -52,7 +69,7 @@
         lng: center.lng() -0.01
     };
     map.panTo(New_center);
-    });    
+    });
     //For the right
     var positionRight = document.createElement('div');
     positionRight.id='Right';
@@ -70,7 +87,7 @@
         lng: center.lng() +0.01
            };
     map.panTo(New_center);
-    });    
+    });
 
     //For the downie
     var positionDown = document.createElement('div');
@@ -123,7 +140,7 @@
   controlText.innerHTML = '<b>Zoom in</b>';
   controlUI.appendChild(controlText);
 
-  google.maps.event.addDomListener(controlUI, 'click', function() { 
+  google.maps.event.addDomListener(controlUI, 'click', function() {
   map.setZoom(map.zoom+1);
   console.log(map.zoom);
   });
@@ -141,15 +158,14 @@
   controlText.innerHTML = '<b>Zoom out</b>';
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply set the map to
-  // Chicago
+  // Setup the click event listeners: simply set the map to stockholm
   google.maps.event.addDomListener(controlUI, 'click', function() {
    
     map.setZoom(map.zoom-1);
     console.log(map.zoom);
   });
 }
-      
+      //sets up markers
       var nubstefan = new google.maps.LatLng(59.3474224, 18.0727875);
       var nubsam = new google.maps.LatLng(59.348000, 18.0727999);
       function initialize() {
