@@ -15,7 +15,7 @@
     <script type="text/javascript">
     
 
-
+    //Creating and filling the pan controls
   function PositionBox(controlDiv, map){
 
     var positionUp = document.createElement('div');
@@ -94,7 +94,7 @@
     map.panTo(New_center);
     });
   }
-
+  //Creating the home button
     function HomeControl(controlDiv, map) {
   var controlUI = document.createElement('div');
   controlUI.className = 'button';
@@ -110,7 +110,8 @@
     map.setZoom(16);
   });
 }
-
+  
+  //creating the zoom in control
   function ZoomInControl(controlDiv, map) {
 
   var controlUI = document.createElement('div');
@@ -148,7 +149,9 @@
     console.log(map.zoom);
   });
 }
-
+      
+      var nubstefan = new google.maps.LatLng(59.3474224, 18.0727875);
+      var nubsam = new google.maps.LatLng(59.348000, 18.0727999);
       function initialize() {
         
         
@@ -179,10 +182,34 @@
         zoomOutControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomOutControlDiv);
         positionBoxDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(positionBoxDiv);
+        map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(positionBoxDiv);
 
+        marker = new google.maps.Marker({
+          map:map,
+           draggable:true,
+           animation: google.maps.Animation.DROP,
+           position: nubstefan
+        });
+       google.maps.event.addListener(marker, 'click', toggleBounce);
 
+      
+        barker = new google.maps.Marker({
+            map:map,
+           draggable:false,
+           animation: google.maps.Animation.DROP,
+           position: nubsam
+        });
       }
+      
+      function toggleBounce() {
+
+  if (marker.getAnimation() != null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+
 
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
