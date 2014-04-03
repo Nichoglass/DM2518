@@ -26,7 +26,7 @@
 	
 
 
-
+//The map becomes global to be used outside the intitialize function
 	var map;
 
 
@@ -349,7 +349,7 @@
 </head>
 <body>
 	
-<div id="startScreen"><input type="button" value="PUSH ME" onclick="hideStart();"/></div>
+<div id="startScreen"><div id="startButtonDiv"></div><input type="button" id="startButton" onclick="hideStart();"/></div></div>
 
 	<div id="mapContainer">
 
