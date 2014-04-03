@@ -1,240 +1,366 @@
 <!DOCTYPE html>
-<html>
-  <head>
-	<!-- make the app display a site-specified icon on the desktop -->
-	
+
+<html manifest="index.appcache">
+
+<head>
+	<!--make the app display a site-specified icon on the desktop -->
+
 	<link rel="shortcut icon" href="logo.ico"> 
-  <link rel="stylesheet" type="text/css" href="albStek.css">
-  <title>AlbStek</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
-    </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL002f7uxl0bXUaXm2peWVOpzYIQIH8Js&sensor=false">
-    </script>
-    <script type="text/javascript">
+	<link rel="stylesheet" type="text/css" href="albStek.css">
 
-	//Hiding adressbar
+	<!--splash screen for iphone 4 -->
+	<link href="peng2.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	<title>AlbStek</title>
+
+	<!-- minimizing/hiding adressbar and prevents the user from zooming-->
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+
+	<style type="text/css">
+	html { height: 100% }
+	body { height: 100%; margin: 0; padding: 0 }
+	#map-canvas { height: 100% }
+	</style>
+	<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL002f7uxl0bXUaXm2peWVOpzYIQIH8Js&sensor=false">
+	</script>
 	
-		//Not possible due to seurity reasons
 	
+	<script type="text/javascript">
+
+	var map;
+
+
 	//periphery elements
-	 
-		//what?
+
+	//what?
+
+
+
+	//hide status bar
+
+	//This seems to be close to impossible without creating a seprate app (with a .apk file)
+
+
+	//Full screen does not work fully on a windows phone. On android devices we can succesfully hide the adressbar but not the 			      statusbar. On IOS (iPhone 4) we could successfully hide both adressbar and statusbar when running the ap from the homescreen.
+
+
+
+
+	//Creating and filling the pan controls
+	function PositionBox(controlDiv, map){
+
+
 		
+		// For the up
+		var positionUp = document.createElement('div');
+		positionUp.id='Up';
+		positionUp.className='position';
+		controlDiv.id='PositionBox'
+		controlDiv.appendChild(positionUp);
+
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b> </b>';
+		positionUp.appendChild(controlText);
+
+		google.maps.event.addDomListener(positionUp, 'click', function() {
+			var center = map.getCenter();
+			var New_center = { lat: center.lat() + 0.005,
+				lng: center.lng()
+			};
+			map.panTo(New_center);
+		});
+		// For the left
+
+		var positionLeft = document.createElement('div');
+		positionLeft.id='Left';
+
+		positionLeft.className='position';
+		controlDiv.appendChild(positionLeft);
+
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b> </b>';
+		positionLeft.appendChild(controlText);
+
+		google.maps.event.addDomListener(positionLeft, 'click', function() {
+			var center = map.getCenter();
+			var New_center = { lat: center.lat(),
+				lng: center.lng() -0.01
+			};
+			map.panTo(New_center);
+		});
+		//For the right
+		var positionRight = document.createElement('div');
+		positionRight.id='Right';
+
+		positionRight.className='position';
+		controlDiv.appendChild(positionRight);
+
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b> </b>';
+		positionRight.appendChild(controlText);
+
+		google.maps.event.addDomListener(positionRight, 'click', function() {
+			var center = map.getCenter();
+			var New_center = { lat: center.lat(),
+				lng: center.lng() +0.01
+			};
+			map.panTo(New_center);
+		});
+
+		//For the downie
+		var positionDown = document.createElement('div');
+		positionDown.id='Down';
+		positionDown.className='position';
+
+		controlDiv.appendChild(positionDown);
+
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b> </b>';
+		positionDown.appendChild(controlText);
+
+		google.maps.event.addDomListener(positionDown, 'click', function() {
+			var center = map.getCenter();
+			var New_center = { lat: center.lat()-0.005,
+
+				lng: center.lng()
+			};
+
+			map.panTo(New_center);
+		});
+	}
+	//Creating the home button
+	function HomeControl(controlDiv, map) {
+		var controlUI = document.createElement('div');
+		controlUI.className = 'button';
+		controlUI.title = 'Click to set the map to Home';
+		controlDiv.appendChild(controlUI);
+
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b>HEMMA</b>';
+		controlUI.appendChild(controlText);
+
+		google.maps.event.addDomListener(controlUI, 'click', function() {
+			map.setCenter(new google.maps.LatLng(59.3474224, 18.072787500000004));
+			map.setZoom(16);
+		});
+	}
+
+	//creating the zoom in control
+	function ZoomInControl(controlDiv, map) {
+
+		var controlUI = document.createElement('div');
+
+		controlUI.className = 'button';
+		controlUI.title = 'Click to zoom in';
+		controlDiv.appendChild(controlUI);
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b>Zoom in</b>';
+		controlUI.appendChild(controlText);
+
+		google.maps.event.addDomListener(controlUI, 'click', function() {
+			map.setZoom(map.zoom+1);
+			console.log(map.zoom);
+		});
+	}
+
+	function ZoomOutControl(controlDiv, map) {
+
+		var controlUI = document.createElement('div');
+
+		controlUI.className = 'button';
+		controlUI.title = 'Click to zoom out';
+		controlDiv.appendChild(controlUI);
+		
+
+		var controlText = document.createElement('div');
+		controlText.innerHTML = '<b>Zoom out</b>';
+		controlUI.appendChild(controlText);
+
+		// Setup the click event listeners: simply set the map to stockholm
+		google.maps.event.addDomListener(controlUI, 'click', function() {
+
+			map.setZoom(map.zoom-1);
+			console.log(map.zoom);
+		});
+	}
+	//sets up markers
+	var nubstefan = new google.maps.LatLng(59.3474224, 18.0727875);
+	var nubsam = new google.maps.LatLng(59.348000, 18.0727999);
+	var nickopro = new google.maps.LatLng(59.326859, 18.071706);
+	function initialize() {
+
+
+		var mapOptions = {
+			center: new google.maps.LatLng(59.3474224, 18.072787500000004),
+			zoom: 16,
+			mapTypeId: google.maps.MapTypeId.SATELLITE,
+			disableDefaultUI: true
+
+		};
+
+		map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+		map.setTilt(45);
+		var homeControlDiv = document.createElement('div');
+		var zoomInControlDiv = document.createElement('div');
+		var zoomOutControlDiv = document.createElement('div');
+		var positionBoxDiv= document.createElement('div');
+
+
+		var homeControl = new HomeControl(homeControlDiv, map);
+		var zoomInControl = new ZoomInControl(zoomInControlDiv, map);
+		var zoomOutControl = new ZoomOutControl(zoomOutControlDiv, map);
+		var positionBox = new PositionBox(positionBoxDiv, map);
+		homeControlDiv.index = 1;
+		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+		zoomInControlDiv.index = 1;
+		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomInControlDiv);
+		zoomOutControlDiv.index = 1;
+		map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomOutControlDiv);
+		positionBoxDiv.index = 1;
+		map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(positionBoxDiv);
+
+		marker = new google.maps.Marker({
+			map:map,
+			draggable:true,
+			animation: google.maps.Animation.DROP,
+			position: nubstefan
+		});
+		google.maps.event.addListener(marker, 'click', toggleBounce);
+	
+
+		barker = new google.maps.Marker({
+			map:map,
+			draggable:false,
+			animation: google.maps.Animation.DROP,
+			position: nubsam
+		});
+		gnarker = new google.maps.Marker({
+			map:map,
+			draggable:true,
+			animation: google.maps.Animation.DROP,
+			position: nickopro
+		});
+		google.maps.event.addListener(gnarker, 'click', toggleBounce2);
+	}
+	
+	//Functions which makes the marker bounce
+
+	function toggleBounce() {
+
+		if (marker.getAnimation() != null) {
+			marker.setAnimation(null);
+			
+
+			
+		} else {
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+			var infowindow = new google.maps.InfoWindow({
+			      content: 'STEFAN!!!!!'
+			  });
+			infowindow.open(map,marker);
+			
+		}
+		
+	}
+	function toggleBounce2() {
+
+		if (gnarker.getAnimation() != null) {
+			
+			gnarker.setAnimation(null);
+			
+			
+		} else {
+			gnarker.setAnimation(google.maps.Animation.BOUNCE);
+			var infowindow = new google.maps.InfoWindow({
+			      content: 'NICKO!!!!'
+			  });
+			infowindow.open(map,gnarker);
+			
+		}
+	}
 	
 	
+
+	  
+	
+
+	//Our new buttons under the map
+	function moveToMyPosition(){
+		var browserSupportFlag =  new Boolean();
+		var initialLocation;
+		var siberia = new google.maps.LatLng(60, 105);
+		var skolan = new google.maps.LatLng(59.3474224, 18.072787500000004);
 		
+		if(navigator.geolocation) {
+		    browserSupportFlag = true;
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		      initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+		      map.setCenter(initialLocation);
+		    }, function() {
+		      handleNoGeolocation(browserSupportFlag);
+		    });
+		  }
+		  // Browser doesn't support Geolocation
+		  else {
+		    browserSupportFlag = false;
+		    handleNoGeolocation(browserSupportFlag);
+		  }
+
+		  function handleNoGeolocation(errorFlag) {
+		    if (errorFlag == true) {
+		      alert("Geolocation service failed.");
+		      initialLocation = skolan;
+		    } else {
+		      alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+		      initialLocation = siberia;
+		    }
+		}
 		
-    //Creating and filling the pan controls
-  function PositionBox(controlDiv, map){
+		map.setCenter(initialLocation);
+		map.setZoom(16);
+	}
+	
+	function moveToAce(){
+		var Ace = new google.maps.LatLng(59.336461, 18.063002);
+		map.setCenter(Ace);
+		map.setZoom(20);
+	}
+	
+	function moveToIvar(){
+		var Ace = new google.maps.LatLng(59.320553, 18.061283);
+		map.setCenter(Ace);
+		map.setZoom(20);
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	
+	
+	
 
 
-	// For the up
-    var positionUp = document.createElement('div');
-    positionUp.id='Up';
-    positionUp.className='position';
-    controlDiv.id='PositionBox'
-    controlDiv.appendChild(positionUp);
+	</script>
 
-    var controlText = document.createElement('div');
-    controlText.innerHTML = '<b> </b>';
-    positionUp.appendChild(controlText);
-
-    google.maps.event.addDomListener(positionUp, 'click', function() {
-    var center = map.getCenter();
-    var New_center = { lat: center.lat() + 0.005,
-        lng: center.lng()
-    };
-    map.panTo(New_center);
-    });
-    // For the left
-    
-	var positionLeft = document.createElement('div');
-    positionLeft.id='Left';
-
-    positionLeft.className='position';
-    controlDiv.appendChild(positionLeft);
-
-    var controlText = document.createElement('div');
-    controlText.innerHTML = '<b> </b>';
-    positionLeft.appendChild(controlText);
-
-    google.maps.event.addDomListener(positionLeft, 'click', function() {
-      var center = map.getCenter();
-      var New_center = { lat: center.lat(),
-        lng: center.lng() -0.01
-    };
-    map.panTo(New_center);
-    });
-    //For the right
-    var positionRight = document.createElement('div');
-    positionRight.id='Right';
-
-    positionRight.className='position';
-    controlDiv.appendChild(positionRight);
-
-    var controlText = document.createElement('div');
-    controlText.innerHTML = '<b> </b>';
-    positionRight.appendChild(controlText);
-
-    google.maps.event.addDomListener(positionRight, 'click', function() {
-      var center = map.getCenter();
-      var New_center = { lat: center.lat(),
-        lng: center.lng() +0.01
-           };
-    map.panTo(New_center);
-    });
-
-    //For the downie
-    var positionDown = document.createElement('div');
-    positionDown.id='Down';
-    positionDown.className='position';
-
-    controlDiv.appendChild(positionDown);
-
-    var controlText = document.createElement('div');
-    controlText.innerHTML = '<b> </b>';
-    positionDown.appendChild(controlText);
-
-    google.maps.event.addDomListener(positionDown, 'click', function() {
-          var center = map.getCenter();
-          var center = map.getCenter();
-      var New_center = { lat: center.lat()-0.005,
-
-        lng: center.lng()
-           };
-
-    map.panTo(New_center);
-    });
-  }
-  //Creating the home button
-    function HomeControl(controlDiv, map) {
-  var controlUI = document.createElement('div');
-  controlUI.className = 'button';
-  controlUI.title = 'Click to set the map to Home';
-  controlDiv.appendChild(controlUI);
-
-  var controlText = document.createElement('div');
-  controlText.innerHTML = '<b>HEMMA</b>';
-  controlUI.appendChild(controlText);
-
-  google.maps.event.addDomListener(controlUI, 'click', function() {
-    map.setCenter(new google.maps.LatLng(59.3474224, 18.072787500000004));
-    map.setZoom(16);
-  });
-}
-  
-  //creating the zoom in control
-  function ZoomInControl(controlDiv, map) {
-
-  var controlUI = document.createElement('div');
-
-  controlUI.className = 'button';
-  controlUI.title = 'Click to zoom in';
-  controlDiv.appendChild(controlUI);
-  var controlText = document.createElement('div');
-  controlText.innerHTML = '<b>Zoom in</b>';
-  controlUI.appendChild(controlText);
-
-  google.maps.event.addDomListener(controlUI, 'click', function() {
-  map.setZoom(map.zoom+1);
-  console.log(map.zoom);
-  });
-}
-
-  function ZoomOutControl(controlDiv, map) {
-
-  var controlUI = document.createElement('div');
-
-  controlUI.className = 'button';
-  controlUI.title = 'Click to zoom out';
-  controlDiv.appendChild(controlUI);
-
-  var controlText = document.createElement('div');
-  controlText.innerHTML = '<b>Zoom out</b>';
-  controlUI.appendChild(controlText);
-
-  // Setup the click event listeners: simply set the map to stockholm
-  google.maps.event.addDomListener(controlUI, 'click', function() {
-   
-    map.setZoom(map.zoom-1);
-    console.log(map.zoom);
-  });
-}
-      //sets up markers
-      var nubstefan = new google.maps.LatLng(59.3474224, 18.0727875);
-      var nubsam = new google.maps.LatLng(59.348000, 18.0727999);
-      function initialize() {
-        
-        
-        var mapOptions = {
-          center: new google.maps.LatLng(59.3474224, 18.072787500000004),
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.SATELLITE,
-          disableDefaultUI: true
-
-        };
-       
-        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-        map.setTilt(45);
-        var homeControlDiv = document.createElement('div');
-        var zoomInControlDiv = document.createElement('div');
-        var zoomOutControlDiv = document.createElement('div');
-        var positionBoxDiv= document.createElement('div');
+</head>
+<body>
 
 
-        var homeControl = new HomeControl(homeControlDiv, map);
-        var zoomInControl = new ZoomInControl(zoomInControlDiv, map);
-        var zoomOutControl = new ZoomOutControl(zoomOutControlDiv, map);
-        var positionBox = new PositionBox(positionBoxDiv, map);
-        homeControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
-        zoomInControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomInControlDiv);
-        zoomOutControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomOutControlDiv);
-        positionBoxDiv.index = 1;
-        map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(positionBoxDiv);
+	<div id="mapContainer">
 
-        marker = new google.maps.Marker({
-          map:map,
-           draggable:true,
-           animation: google.maps.Animation.DROP,
-           position: nubstefan
-        });
-       google.maps.event.addListener(marker, 'click', toggleBounce);
+		<div id="map-canvas"/>
+	</div>
 
-      
-        barker = new google.maps.Marker({
-            map:map,
-           draggable:false,
-           animation: google.maps.Animation.DROP,
-           position: nubsam
-        });
-      }
-      
-      function toggleBounce() {
-
-  if (marker.getAnimation() != null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
+	<div id='buttons'>
+		<input type='button' id='hereButton' value='Here' onclick='moveToMyPosition();'/>
+		<input type='button' id='hereButton' value='Ace' onclick='moveToAce();'/>
+		<input type='button' id='hereButton' value='Ivar Los Park' onclick='moveToIvar();'/>
 
 
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-
-  </head>
-  <body>
-
-        <div id="map-canvas"/>
+	</div>
 
 
-  </body>
+
+
+</body>
 </html>
