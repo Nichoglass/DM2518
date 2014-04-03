@@ -22,12 +22,16 @@
 	body { height: 100%; margin: 0; padding: 0 }
 	#map-canvas { height: 100% }
 	</style>
+	
 	<script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL002f7uxl0bXUaXm2peWVOpzYIQIH8Js&sensor=false">
 	</script>
 	
 	
 	<script type="text/javascript">
+	
+
+
 
 	var map;
 
@@ -337,14 +341,21 @@
 	
 	
 	
+	function hideStart(){
+		
+		var startDiv = document.getElementById("startScreen");
 	
+		startDiv.parentNode.removeChild(startDiv);
+	
+	}
 
 
 	</script>
 
 </head>
 <body>
-
+	
+<div id="startScreen"><input type="button" value="PUSH ME" onclick="hideStart();"/></div>
 
 	<div id="mapContainer">
 
