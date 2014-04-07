@@ -10,7 +10,7 @@
 #startButtonDiv{
 	
 
-	margin-top:65%;
+	margin-top:70%;
 	margin-left:auto;
 	margin-right:auto;
 	
@@ -97,4 +97,8 @@
 	margin-left: auto;
 	margin-right: auto;
 
+}
+
+.teleportButton{
+	height:100%
 }
